@@ -20,5 +20,16 @@ export class UserDto {
 
 
     @IsNotEmpty()
-    pofileImage: string
+    profileImage: string
+}
+
+
+export class loginDto {
+    @IsNotEmpty()
+    @IsEmail()
+    email: string
+    
+    @IsNotEmpty()
+     password:string
+
 }
