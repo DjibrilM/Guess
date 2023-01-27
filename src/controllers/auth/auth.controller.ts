@@ -30,6 +30,7 @@ export class authController {
         }
     }
 
+    
     @Post('login')
     login(@Body() loginData: loginDto) {
 
@@ -45,7 +46,5 @@ export class authController {
                 cause: error
             });
         }
-
-
     }
 }
