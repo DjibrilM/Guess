@@ -17,9 +17,6 @@ export class User {
 
     @Prop({ required: false })
     profileImage: string
-
-    // @Prop({ required: true })
-    // userMachine: string
 }
 
 
