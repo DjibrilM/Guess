@@ -12,10 +12,8 @@ import { signLocalToken, signCookieToken } from "src/lib/jwt";
 @Injectable()
 export class authService {
     constructor(@InjectModel(User.name) private userModel: Model<userDocument>) { }
-
     //register service 
     async registerUser(email: string, name: string, password: string, profileImage: string) {
-
         try {
             const hashedPassword: string = await hashPassword(password)
             //find existing user with the same email address
@@ -57,7 +55,7 @@ export class authService {
 
     }
 
-    
+
     //login service 
     async loginUser(email: string, password: string) {
         try {

@@ -12,9 +12,10 @@ import { Res } from '@nestjs/common';
 @Controller('auth')
 export class authController {
     constructor(private readonly Authservice: authService) { }
+
+
     @Post('register')
     async register(@Res({ passthrough: true }) response: ResponseType, @Body() userData: UserDto) {
-
         const registerService: any = await this.Authservice.registerUser(
             userData.email,
             userData.name,
@@ -23,7 +24,7 @@ export class authController {
         );
 
         //send authCookie 
-        response.cookie(registerService.cookieToken, 'identifier');
+        response.cookie('identifier', registerService.cookieToken);
         try {
             return {
                 email: registerService.email,
@@ -43,12 +44,10 @@ export class authController {
         }
     }
 
-    
     @Post('login')
     async login(@Res() response: ResponseType, @Body() loginData: loginDto) {
         const loginService: any = await this.Authservice.loginUser(loginData.email, loginData.password);
         response.cookie(loginService.cookieToken, 'identifier')
-
 
         response.status(200).json({
             email: loginService.email,

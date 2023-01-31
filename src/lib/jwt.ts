@@ -12,8 +12,7 @@ export const signLocalToken = (email: string, id: string): string => {
     return sign
 }
 
-
-export const signCookieToken = (id: string, email: string) => {
+export const signCookieToken = (email: string, id: string,) => {
     const signRandomToken = crypto.randomBytes(30).toString();
     const sign = jwt.sign({
         id: id,

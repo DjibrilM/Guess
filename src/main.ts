@@ -4,7 +4,13 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { ValidationPipe } from '@nestjs/common';
 import { ValidatorOptions } from 'class-validator';
 import * as cookieParser from 'cookie-parser';
+// Require the cloudinary library
+const cloudinary = require('cloudinary').v2;
 
+// Return "https" URLs by setting secure: true
+cloudinary.config({
+  secure: true
+});
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

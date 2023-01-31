@@ -17,8 +17,7 @@ export class UserDto {
     @MinLength(4)
     password: string;
 
-
-
+    
     @IsNotEmpty()
     profileImage: string
 }
@@ -28,8 +27,8 @@ export class loginDto {
     @IsNotEmpty()
     @IsEmail()
     email: string
-    
+
     @IsNotEmpty()
-     password:string
+    password: string
 
 }
