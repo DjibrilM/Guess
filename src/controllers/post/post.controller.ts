@@ -14,6 +14,7 @@ interface postImage {
 }
 
 
+
 @Controller('image')
 export class PostController {
     constructor(private readonly postService: PostService , @InjectModel(post.name) private postModel: Model<postDocument>) { }
