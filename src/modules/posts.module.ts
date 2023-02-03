@@ -6,11 +6,14 @@ import { Post, postSchema } from "src/schemas/post.schema";
 import { MiddlewareConsumer } from "@nestjs/common";
 import { NestModule } from "@nestjs/common";
 import { authenticaionMiddleware } from "src/middleware/auth.middleware";
-
+import { User, UserSchema } from "src/schemas/user.schema";
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: Post.name, schema: postSchema }])],
+        MongooseModule.forFeature([
+            { name: Post.name, schema: postSchema },
+            { name: User.name, schema: UserSchema }
+        ])],
     controllers: [PostController],
     providers: [PostService]
 })

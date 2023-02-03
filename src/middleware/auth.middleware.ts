@@ -3,7 +3,7 @@ import {
     NestMiddleware,
 } from "@nestjs/common";
 import { Response, Request, NextFunction } from "express";
-import { Post, postDocument, } from "src/schemas/post.schema";
+import { User, userDocument } from "src/schemas/user.schema";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { HttpException } from "@nestjs/common";
@@ -11,12 +11,14 @@ import * as jwt from 'jsonwebtoken';
 import mongoose from "mongoose";
 
 export class authenticaionMiddleware implements NestMiddleware {
-    constructor(@InjectModel(Post.name) private postModel: Model<postDocument>) { }
+    constructor(@InjectModel(User.name) private userModel: Model<userDocument>) { }
     async use(req: Request, res: Response, next: NextFunction) {
         try {
             const headerString: any = req.headers.authorization;
             const getauthToken = headerString.split(' ')[1];
             const getAuthCookie: string = req.cookies['identifier'];
+            const AUTH_JWT_KEY = process.env.JWT_AUTH_KEY;
+            const COOKIE_JWT_KEY = process.env.JWT_COOKIE_KEY;
 
             let authId: string;
             let cookieId: string;
@@ -29,7 +31,7 @@ export class authenticaionMiddleware implements NestMiddleware {
 
             // check authToken 
             try {
-                const checkAutToken = await jwt.verify(getauthToken, 'password');
+                const checkAutToken = await jwt.verify(getauthToken, AUTH_JWT_KEY);
                 authId = checkAutToken.id;
             } catch (err) {
                 const error = new Error;
@@ -40,7 +42,7 @@ export class authenticaionMiddleware implements NestMiddleware {
 
             //check authCookie 
             try {
-                const checkCookieAuth = await jwt.verify(getAuthCookie, 'passwordeiodikjdedc');
+                const checkCookieAuth = await jwt.verify(getAuthCookie, COOKIE_JWT_KEY);
                 cookieId = checkCookieAuth.id;
             } catch (err) {
                 const error = new Error;
@@ -52,10 +54,8 @@ export class authenticaionMiddleware implements NestMiddleware {
             if (cookieId === authId) {
                 try {
                     const id = new mongoose.mongo.ObjectID(cookieId);
-                    const findUser = await this.postModel.find();
-                    req.user = 'djibril';
-                    console.log(findUser, 'finded user')
-
+                    const findUser = await this.userModel.findById(id);
+                    req.user = findUser;
                     next();
                 } catch (error) {
                     console.log(error);

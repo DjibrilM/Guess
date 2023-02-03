@@ -4,6 +4,10 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { ValidationPipe } from '@nestjs/common';
 import { ValidatorOptions } from 'class-validator';
 import * as cookieParser from 'cookie-parser';
+import * as dotenv from 'dotenv' 
+dotenv.config()
+
+
 // Require the cloudinary library
 const cloudinary = require('cloudinary').v2;
 
